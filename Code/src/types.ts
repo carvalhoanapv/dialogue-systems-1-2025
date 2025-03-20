@@ -1,17 +1,31 @@
-import { Hypothesis, SpeechStateExternalEvent } from "speechstate";
-import { AnyActorRef } from "xstate";
-
-export interface DMContext {
-  spstRef: AnyActorRef;
-  lastResult: Hypothesis[] | null; // 
-  person: any; //
-  time: any; //
-  date: any; //
-  userInput: any; //
-  // userUtterance: string; // Adiciona a nova propriedade corretamente tipada 
-  // //Eu posso criar qualquer variable aqui e eu especifico se esse elemento existo no DM Context. Eu defino as chaves deste elemento e eu posso definor os tipos de casa um destes elementos.
-  // criar uma variavel para cada pessoa, data, hora
-
+// src/types.ts
+export interface RecognizedEntities {
+  famous_person?: string;
 }
-
-export type DMEvents = SpeechStateExternalEvent | { type: "CLICK" };
+// Definição do contexto do chatbot
+export interface ChatbotContext {
+    score: number;
+    spstRef: any;
+    lastResult: string;
+    currentPerson: {
+      name: string;
+      hints: string
+    }| null;
+    currentHintIndex: 0;
+  }
+  
+  // Definição dos eventos possíveis
+  export type ChatbotEvent =
+    | { type: 'START'; name: string }
+    | { type: 'ASK_QUESTION' }
+    | { type: 'ANSWER'; correct: any }
+    | { type: 'END' }
+    | { type: 'STOP' }
+    | { type: 'CONTINUE' }
+    | { type: "CLICK" }
+    | { type: "ASR_NOINPUT" }
+    | { type: "SPEAK_COMPLETE" }
+    | { type: "LISTEN_COMPLETE" }
+    | { type: "RECOGNISED"; data: { nluValue: { intent: string; entities: RecognizedEntities } }; value: any; }
+    | { type: "ASRTTS_READY" };
+  

@@ -7,11 +7,10 @@ export interface ChatbotContext {
     score: number;
     spstRef: any;
     lastResult: string;
-    currentPerson: {
-      name: string;
-      hints: string
-    }| null;
+    currentPerson: string | undefined;
+    currentPersonIndex: number;
     currentHintIndex: 0;
+    rightAnswer: string | undefined;
   }
   
   // Definição dos eventos possíveis

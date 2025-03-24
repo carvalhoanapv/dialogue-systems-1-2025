@@ -2,7 +2,7 @@ import { assign, createActor, setup } from "xstate";
 import { Settings, speechstate } from "speechstate";
 import { createBrowserInspector } from "@statelyai/inspect";
 import { KEY } from "./azure";
-import { ChatbotContext, ChatbotEvent, RecognizedEntities } from "./types";
+import { ChatbotContext, ChatbotEvent } from "./types";
 import { FamousPeople } from "./famous";
 import { stopGameNow } from "./stopGame";
 
@@ -22,8 +22,6 @@ const settings: Settings = {
   locale: "en-US",
   ttsDefaultVoice: "en-US-DavisNeural",
 };
-
-let index = 0;
 
 export const machine = setup({
   types: {
@@ -46,6 +44,11 @@ export const machine = setup({
   context: ({ spawn }) => ({
     spstRef: spawn(speechstate, { input: settings }),
     score: 0,
+    lastResult: "",
+    currentPerson: undefined,
+    currentPersonIndex: 0,
+    currentHintIndex: 0,
+    rightAnswer: undefined,
   }),
   id: "guessHistoricalFigures",
   initial: "Prepare",
@@ -99,13 +102,13 @@ export const machine = setup({
           },
           {
             target: "listenCompleteFirstQuestion0",
-            actions: assign(({ context }) => ({
+            actions: assign(({  }) => ({
               rightAnswer: "no",
             })),
           },
         ],
         ASR_NOINPUT: {
-          actions: assign(({ context }) => ({
+          actions: assign(({  }) => ({
             rightAnswer: "no",
           })),
         },
@@ -157,13 +160,13 @@ export const machine = setup({
           },
           {
             target: "listenCompleteSecondQuestion0",
-            actions: assign(({ context }) => ({
+            actions: assign(({  }) => ({
               rightAnswer: "no",
             })),
           },
         ],
         ASR_NOINPUT: {
-          actions: assign(({ context }) => ({
+          actions: assign(({  }) => ({
             rightAnswer: "no",
           })),
         },
@@ -219,13 +222,13 @@ export const machine = setup({
           },
           {
             target: "listenCompleteFirstQuestion1",
-            actions: assign(({ context }) => ({
+            actions: assign(({  }) => ({
               rightAnswer: "no",
             })),
           },
         ],
         ASR_NOINPUT: {
-          actions: assign(({ context }) => ({
+          actions: assign(({  }) => ({
             rightAnswer: "no",
           })),
         },
@@ -277,13 +280,13 @@ export const machine = setup({
           },
           {
             target: "listenCompleteSecondQuestion1",
-            actions: assign(({ context }) => ({
+            actions: assign(({  }) => ({
               rightAnswer: "no",
             })),
           },
         ],
         ASR_NOINPUT: {
-          actions: assign(({ context }) => ({
+          actions: assign(({  }) => ({
             rightAnswer: "no",
           })),
         },
@@ -338,13 +341,13 @@ export const machine = setup({
           },
           {
             target: "listenCompleteFirstQuestion2",
-            actions: assign(({ context }) => ({
+            actions: assign(({  }) => ({
               rightAnswer: "no",
             })),
           },
         ],
         ASR_NOINPUT: {
-          actions: assign(({ context }) => ({
+          actions: assign(({  }) => ({
             rightAnswer: "no",
           })),
         },
@@ -396,13 +399,13 @@ export const machine = setup({
           },
           {
             target: "listenCompleteSecondQuestion2",
-            actions: assign(({ context }) => ({
+            actions: assign(({  }) => ({
               rightAnswer: "no",
             })),
           },
         ],
         ASR_NOINPUT: {
-          actions: assign(({ context }) => ({
+          actions: assign(({  }) => ({
             rightAnswer: "no",
           })),
         },
@@ -457,13 +460,13 @@ export const machine = setup({
           },
           {
             target: "listenCompleteFirstQuestion3",
-            actions: assign(({ context }) => ({
+            actions: assign(({  }) => ({
               rightAnswer: "no",
             })),
           },
         ],
         ASR_NOINPUT: {
-          actions: assign(({ context }) => ({
+          actions: assign(({  }) => ({
             rightAnswer: "no",
           })),
         },
@@ -515,13 +518,13 @@ export const machine = setup({
           },
           {
             target: "listenCompleteSecondQuestion3",
-            actions: assign(({ context }) => ({
+            actions: assign(({  }) => ({
               rightAnswer: "no",
             })),
           },
         ],
         ASR_NOINPUT: {
-          actions: assign(({ context }) => ({
+          actions: assign(({  }) => ({
             rightAnswer: "no",
           })),
         },
@@ -576,13 +579,13 @@ export const machine = setup({
           },
           {
             target: "listenCompleteFirstQuestion4",
-            actions: assign(({ context }) => ({
+            actions: assign(({  }) => ({
               rightAnswer: "no",
             })),
           },
         ],
         ASR_NOINPUT: {
-          actions: assign(({ context }) => ({
+          actions: assign(({  }) => ({
             rightAnswer: "no",
           })),
         },
@@ -634,13 +637,13 @@ export const machine = setup({
           },
           {
             target: "listenCompleteSecondQuestion4",
-            actions: assign(({ context }) => ({
+            actions: assign(({  }) => ({
               rightAnswer: "no",
             })),
           },
         ],
         ASR_NOINPUT: {
-          actions: assign(({ context }) => ({
+          actions: assign(({  }) => ({
             rightAnswer: "no",
           })),
         },
@@ -695,13 +698,13 @@ export const machine = setup({
           },
           {
             target: "listenCompleteFirstQuestion5",
-            actions: assign(({ context }) => ({
+            actions: assign(({  }) => ({
               rightAnswer: "no",
             })),
           },
         ],
         ASR_NOINPUT: {
-          actions: assign(({ context }) => ({
+          actions: assign(({  }) => ({
             rightAnswer: "no",
           })),
         },
@@ -753,13 +756,13 @@ export const machine = setup({
           },
           {
             target: "listenCompleteSecondQuestion5",
-            actions: assign(({ context }) => ({
+            actions: assign(({ }) => ({
               rightAnswer: "no",
             })),
           },
         ],
         ASR_NOINPUT: {
-          actions: assign(({ context }) => ({
+          actions: assign(({  }) => ({
             rightAnswer: "no",
           })),
         },
@@ -814,13 +817,13 @@ export const machine = setup({
           },
           {
             target: "listenCompleteFirstQuestion6",
-            actions: assign(({ context }) => ({
+            actions: assign(({  }) => ({
               rightAnswer: "no",
             })),
           },
         ],
         ASR_NOINPUT: {
-          actions: assign(({ context }) => ({
+          actions: assign(({  }) => ({
             rightAnswer: "no",
           })),
         },
@@ -872,13 +875,13 @@ export const machine = setup({
           },
           {
             target: "listenCompleteSecondQuestion6",
-            actions: assign(({ context }) => ({
+            actions: assign(({  }) => ({
               rightAnswer: "no",
             })),
           },
         ],
         ASR_NOINPUT: {
-          actions: assign(({ context }) => ({
+          actions: assign(({  }) => ({
             rightAnswer: "no",
           })),
         },
@@ -933,13 +936,13 @@ export const machine = setup({
           },
           {
             target: "listenCompleteFirstQuestion7",
-            actions: assign(({ context }) => ({
+            actions: assign(({ }) => ({
               rightAnswer: "no",
             })),
           },
         ],
         ASR_NOINPUT: {
-          actions: assign(({ context }) => ({
+          actions: assign(({ }) => ({
             rightAnswer: "no",
           })),
         },
@@ -991,13 +994,13 @@ export const machine = setup({
           },
           {
             target: "listenCompleteSecondQuestion7",
-            actions: assign(({ context }) => ({
+            actions: assign(({ }) => ({
               rightAnswer: "no",
             })),
           },
         ],
         ASR_NOINPUT: {
-          actions: assign(({ context }) => ({
+          actions: assign(({ }) => ({
             rightAnswer: "no",
           })),
         },
@@ -1052,13 +1055,13 @@ export const machine = setup({
           },
           {
             target: "listenCompleteFirstQuestion8",
-            actions: assign(({ context }) => ({
+            actions: assign(({ }) => ({
               rightAnswer: "no",
             })),
           },
         ],
         ASR_NOINPUT: {
-          actions: assign(({ context }) => ({
+          actions: assign(({ }) => ({
             rightAnswer: "no",
           })),
         },
@@ -1110,13 +1113,13 @@ export const machine = setup({
           },
           {
             target: "listenCompleteSecondQuestion8",
-            actions: assign(({ context }) => ({
+            actions: assign(({ }) => ({
               rightAnswer: "no",
             })),
           },
         ],
         ASR_NOINPUT: {
-          actions: assign(({ context }) => ({
+          actions: assign(({ }) => ({
             rightAnswer: "no",
           })),
         },
@@ -1171,13 +1174,13 @@ export const machine = setup({
           },
           {
             target: "listenCompleteFirstQuestion9",
-            actions: assign(({ context }) => ({
+            actions: assign(({ }) => ({
               rightAnswer: "no",
             })),
           },
         ],
         ASR_NOINPUT: {
-          actions: assign(({ context }) => ({
+          actions: assign(({ }) => ({
             rightAnswer: "no",
           })),
         },
@@ -1229,13 +1232,13 @@ export const machine = setup({
           },
           {
             target: "listenCompleteSecondQuestion9",
-            actions: assign(({ context }) => ({
+            actions: assign(({ }) => ({
               rightAnswer: "no",
             })),
           },
         ],
         ASR_NOINPUT: {
-          actions: assign(({ context }) => ({
+          actions: assign(({  }) => ({
             rightAnswer: "no",
           })),
         },
@@ -1272,7 +1275,7 @@ export const machine = setup({
     exitAnytime: {
         entry: {
           type: "spst.speak",
-          params: ({ context }) => ({
+          params: ({  }) => ({
             utterance: `You chose to terminate the game.`,
           }),
         },

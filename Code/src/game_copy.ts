@@ -1287,7 +1287,7 @@ export const machine = setup({
 
     showingScore: {
       entry: {type: "spst.speak", params:
-      ({ context }) => ({utterance: `That was fun. But don't think for a second that you've mastered history. Next time, I'll bring the real challenge. And when that happens... I'll still be the one who knocks. Your total score is: ${context.score} See you soon!`})},
+      ({ context }) => ({utterance: `That was fun. But don't think for a second that you've mastered history. Next time, I'll bring the real challenge. And when that happens... I'll still be the one who knocks...        Your total score is: ${context.score}.`})},
       on:{
         SPEAK_COMPLETE: "finalState",
     }
